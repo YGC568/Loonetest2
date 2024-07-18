@@ -156,19 +156,21 @@ def ensembles_to_csv(
     station_id: str,
     ensembles: pd.core.frame.DataFrame,
     stats: pd.core.frame.DataFrame,
+    date: str
 ):
     """Writes the ensembles and stats from the given DataFrames to a file .csv file.
         Each ensemble and stat is written in its own column.
-        The name of each file is of the format: <station_id>_FLOW_cmd_geoglows.csv
+        The name of each file is of the format: <station_id>_<date>_FLOW_cmd_geoglows.csv
 
     Args:
         workspace (str): The path to the directory to write the files out to.
         station_id (str): The id of the station that the data is from.
         ensembles (pandas.core.frame.DataFrame): The DataFrame that holds the flow data.
         stats (pandas.core.frame.DataFrame): The DataFrame that holds the stats data.
+        date (str): The date to include in the file name.
     """
     # Get the path to the file that will be written
-    file_name = f"{station_id}_FLOW_cmd_geoglows.csv"
+    file_name = f"{station_id}_{date}_FLOW_cmd_geoglows.csv"
     file_path = os.path.join(workspace, file_name)
 
     # Format DataFrames for LOONE
@@ -340,7 +342,7 @@ def main(
         if station_id in REACH_IDS.keys():
             reach_ids[station_id] = REACH_IDS[station_id]
         elif station_id not in station_locations.keys():
-            print(f"Error-The longitude and latitude could not be downloaded for station {station_id}")
+            print(f"Error: The longitude and latitude could not be downloaded for station {station_id}")
 
     # Get station reach ids
     for station_id in station_locations.keys():
@@ -349,7 +351,7 @@ def main(
             try:
                 reach_ids[station_id] = get_reach_id(location[0], location[1])
             except Exception as e:
-                print(f"Error-Failed to get reach id for station {station_id} ({str(e)})")
+                print(f"Error: Failed to get reach id for station {station_id} ({str(e)})")
 
     # Get the flow data for each station
     for station_id in reach_ids.keys():
@@ -372,7 +374,7 @@ def main(
                     cache_path,
                 )
 
-        ensembles_to_csv(workspace, station_id, station_ensembles, station_stats)
+        ensembles_to_csv(workspace, station_id, station_ensembles, station_stats, forecast_date)
 
 
 if __name__ == "__main__":
