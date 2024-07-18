@@ -337,26 +337,24 @@ def main(
 
     # Check for any download failures
     for station_id in station_ids:
-    if station_id in REACH_IDS.keys():
-        reach_ids[station_id] = REACH_IDS[station_id]
-    elif station_id not in station_locations.keys():
-        print(f"Error: The longitude and latitude could not be downloaded for station {station_id}")
+        if station_id in REACH_IDS.keys():
+            reach_ids[station_id] = REACH_IDS[station_id]
+        elif station_id not in station_locations.keys():
+            print(f"Error-The longitude and latitude could not be downloaded for station {station_id}")
 
     # Get station reach ids
-    if station_id not in REACH_IDS.keys():
-        for station_id in station_locations.keys():
+    for station_id in station_locations.keys():
+        if station_id not in reach_ids.keys():
             location = station_locations[station_id]
             try:
                 reach_ids[station_id] = get_reach_id(location[0], location[1])
             except Exception as e:
-                print(f"Error: Failed to get reach id for station {
-                      station_id} ({str(e)})")
+                print(f"Error-Failed to get reach id for station {station_id} ({str(e)})")
 
     # Get the flow data for each station
     for station_id in reach_ids.keys():
         reach_id = reach_ids[station_id]
-        station_ensembles = get_flow_forecast_ensembles(
-            reach_id, forecast_date)
+        station_ensembles = get_flow_forecast_ensembles(reach_id, forecast_date)
         station_stats = get_flow_forecast_stats(reach_id, forecast_date)
 
         if bias_corrected:
@@ -374,13 +372,11 @@ def main(
                     cache_path,
                 )
 
-        ensembles_to_csv(workspace, station_id,
-                         station_ensembles, station_stats)
+        ensembles_to_csv(workspace, station_id, station_ensembles, station_stats)
 
 
 if __name__ == "__main__":
     workspace = sys.argv[1].rstrip("/")
     bias_corrected = sys.argv[2].lower() in ["true", "yes", "y", "1"]
     observed_data_path = sys.argv[3]
-    main(workspace, bias_corrected=bias_corrected,
-         observed_data_dir=observed_data_path)
+    main(workspace, bias_corrected=bias_corrected, observed_data_dir=observed_data_path)
