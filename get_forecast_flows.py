@@ -170,7 +170,7 @@ def ensembles_to_csv(
         date (str): The date to include in the file name.
     """
     # Get the path to the file that will be written
-    file_name = f"{station_id}_{date}_FLOW_cmd_geoglows.csv"
+    file_name = f"{station_id}_FLOW_cmd_geoglows_{date}.csv"
     file_path = os.path.join(workspace, file_name)
 
     # Format DataFrames for LOONE
