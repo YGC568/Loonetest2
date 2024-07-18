@@ -101,6 +101,6 @@ jobs:
       run: |
         git add Outputs/* Data_Download/*
         git commit -m "Daily data processing at $(date +'%Y-%m-%d %H:%M:%S')"
-        git push https://github.com/YGC568/LOONETest HEAD:main
+        git push https://github.com/YGC568/LOONEtest2 HEAD:main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
