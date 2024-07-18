@@ -76,6 +76,11 @@ jobs:
         echo 'options(encoding = "UTF-8")' >> ~/.Rprofile
         echo 'Sys.setlocale("LC_ALL", "en_US.UTF-8")' >> ~/.Rprofile
 
+    - name: Create necessary directories
+      run: |
+        mkdir -p Data_Download
+        mkdir -p Outputs
+
     - name: Run Geoglows processing script
       env:
         R_HOME: ${{ env.R_HOME }}
@@ -86,7 +91,7 @@ jobs:
         python -m loone_data_prep.flow_data.get_outflows Data_Download && \
         python -m loone_data_prep.flow_data.S65E_total Data_Download && \
         python get_forecast_flows.py
-      
+
     - name: Configure Git
       run: |
         git config --global user.name 'YGC568'
