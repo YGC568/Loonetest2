@@ -341,7 +341,7 @@ def main(
             reach_ids[station_id] = REACH_IDS[station_id]
         elif station_id not in station_locations.keys():
             raise Exception(
-                f"Error: The longitude and latitude could not be downloaded for station {
+                f"Error The longitude and latitude could not be downloaded for station {
                     station_id}"
             )
 
