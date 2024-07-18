@@ -1,7 +1,7 @@
 name: Geoglows Processing_dbhybroR
 on:
   schedule:
-    - cron: '0 16 * * *'  # This cron expression runs the job daily at 11 AM EST (16 UTC)
+    - cron: '0 9 * * *'  # cron expression runs the job daily at 4 AM EST (9 AM UTC)
   workflow_dispatch:  # Allows manual trigger of the workflow
 jobs:
   run-script:
