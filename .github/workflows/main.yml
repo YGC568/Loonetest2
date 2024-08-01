@@ -91,7 +91,7 @@ jobs:
         python -m loone_data_prep.flow_data.get_outflows Data_Download && \
         python -m loone_data_prep.flow_data.S65E_total Data_Download && \
         python get_forecast_flows.py Outputs True Outputs
-
+#here True means bias corrected data
     - name: Configure Git
       run: |
         git config --global user.name 'YGC568'
