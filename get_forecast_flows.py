@@ -41,7 +41,7 @@ HOURS_IN_DAY = 24
 FORECAST_DATE = (datetime.datetime.now()).strftime("%Y%m%d")
 
 GEOGLOWS_ENDPOINT = "https://geoglows.ecmwf.int/api/"
-
+#Change new api endpoint version2 and no change in other code lines.
 
 def get_stations_latitude_longitude(station_ids: list[str]):
     """Gets the latitudes and longitudes of the given stations.
