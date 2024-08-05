@@ -99,7 +99,8 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git add Outputs/* Data_Download/*
+        git add Outputs/*  #adds 2mb daily to existing storage
+        # commented Data_Download/* for storage optimization
         git commit -m "Daily data processing at $(date +'%Y-%m-%d %H:%M:%S')"
         git push https://github.com/YGC568/LOONEtest2 HEAD:main
       env:
