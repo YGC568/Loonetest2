@@ -97,11 +97,20 @@ jobs:
         git config --global user.name 'YGC568'
         git config --global user.email 'gopichandyenikapalli@usf.edu'
 
-    - name: Commit and push changes
+    - name: Commit and push daily changes
       run: |
-        git add Outputs/*  #adds 2mb daily to existing storage
-        # commented Data_Download/* for storage optimization
+        git add Outputs/* #adds 2 to 5 mb daily
         git commit -m "Daily data processing at $(date +'%Y-%m-%d %H:%M:%S')"
         git push https://github.com/YGC568/LOONEtest2 HEAD:main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: always()
+
+    - name: Commit and push monthly changes
+      run: |
+        git add Data_Download/* #adds 10mb montly.
+        git commit -m "Monthly data processing at $(date +'%Y-%m-%d %H:%M:%S')"
+        git push https://github.com/YGC568/LOONEtest2 HEAD:main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: github.event.schedule == '0 9 1 * *'
