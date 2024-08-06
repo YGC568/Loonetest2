@@ -73,9 +73,9 @@ def get_stations_latitude_longitude(station_ids: list[str]):
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_file_path = os.path.join(temp_dir, 'temp_dataframe.csv')
 
-            # Save to CSV with encoding 'windows-1252' and read back to handle encoding
-            pd_dataframe.to_csv(temp_file_path, encoding='windows-1252')
-            pd_dataframe = pd.read_csv(temp_file_path, encoding='windows-1252')
+            # Save to CSV with encoding 'utf-8' and read back to handle encoding
+            pd_dataframe.to_csv(temp_file_path, encoding='utf-8')
+            pd_dataframe = pd.read_csv(temp_file_path, encoding='utf-8')
 
         # Debug print to check the type and structure of pd_dataframe
         print(f"Type of pd_dataframe: {type(pd_dataframe)}")
@@ -182,7 +182,7 @@ def ensembles_to_csv(
         ensembles[column_name] = stats[column_name].tolist()
 
     # Write out the .csv file
-    ensembles.to_csv(file_path)
+    ensembles.to_csv(file_path, encoding='utf-8')
 
     # Notify user of success
     print(f"File Saved: {file_path}")
